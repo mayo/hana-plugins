@@ -12,7 +12,8 @@ setup(name='hana-plugin-jinja',
     description='Jinja templating for Hana static site generator',
 
     install_requires=[
-        'JInja2>=2.9.6',
+        'Jinja2>=2.9.6',
+        'hana',
     ],
 
     author='Mayo Jordanov',

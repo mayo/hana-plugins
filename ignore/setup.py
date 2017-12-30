@@ -12,6 +12,8 @@ setup(name='hana-plugin-ignore',
     description='Ignore plugin for Hana static site generator',
 
     install_requires=[
+        'hana',
+        'pathspec>=0.5.2', 
     ],
 
     author='Mayo Jordanov',

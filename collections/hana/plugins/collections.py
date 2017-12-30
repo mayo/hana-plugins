@@ -1,12 +1,6 @@
 from hana.errors import HanaPluginError
-
-#TODO: clean up prints. use logging
-
-
-
 import pathspec
 
-#TODO: define article previous/next links
 class Collections():
     KEY = 'collection'
 
@@ -30,7 +24,6 @@ class Collections():
     def __call__(self, files, hana):
 
         for filename, f in files:
-            #print f
             #TODO: this should probably be taken care of globally
             #TODO: metafile experiment
             f['path'] = filename

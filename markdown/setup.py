@@ -13,6 +13,7 @@ setup(name='hana-plugin-markdown',
 
     install_requires=[
         'Markdown>=2.6.8',
+        'hana',
     ],
 
     author='Mayo Jordanov',

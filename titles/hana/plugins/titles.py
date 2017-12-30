@@ -3,7 +3,6 @@ from bs4 import SoupStrainer
 from hana.errors import HanaPluginError
 import re
 
-#TODO: clean up prints. use logging
 #TODO: fix
 def titles(remove=False):
     md_re = re.compile(r'\.(md|markdown)$')

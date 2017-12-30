@@ -12,6 +12,7 @@ setup(name='hana-plugin-pretty-url',
     description='Pretty URL plugin for Hana static site generator',
 
     install_requires=[
+        'hana',
     ],
 
     author='Mayo Jordanov',

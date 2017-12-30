@@ -13,6 +13,7 @@ setup(name='hana-plugin-titles',
 
     install_requires=[
         'beautifulsoup4>=4.6.0',
+        'hana',
     ],
 
     author='Mayo Jordanov',

@@ -12,6 +12,7 @@ setup(name='hana-plugin-collections',
     description='Collections plugin for Hana static site generator',
 
     install_requires=[
+        'hana',
         'pathspec>=0.5.2',
     ],
 

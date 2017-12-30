@@ -1,14 +1,14 @@
 from __future__ import absolute_import
 from hana.errors import HanaPluginError
+import logging
 import markdown
 import os
 import re
 
-#TODO: clean up prints. use logging
-
 class Markdown(object):
 
     def __init__(self, config={}):
+        self.logger = logging.getLogger(self.__module__)
         #TODO: support file extension pattern
 
         self.output_extension = config.get('extension', '.html')
@@ -38,7 +38,7 @@ class Markdown(object):
 
         for filename, f in files:
             if 'index.' in filename or 'DS_Store' in filename:
-                print 'markdown ', filename
+                self.logger.debug('markdown {}'.format(filename))
 
             if not md_re.search(filename):
                 continue

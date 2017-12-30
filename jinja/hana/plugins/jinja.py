@@ -4,6 +4,7 @@ from jinja2 import evalcontextfilter, Environment, FileSystemLoader, Markup
 from jinja2.ext import Extension
 import jinja2.exceptions
 import json
+import logging
 
 # tojson filter in jinja sucks
 @evalcontextfilter
@@ -25,11 +26,12 @@ def jinja_json(eval_ctx, value, indent=None):
 
 class Jinja():
     def __init__(self, config={}):
+        self.logger = logging.getLogger(self.__module__)
 
         #TODO: make sure required stuff is in config
 
         tplPath = config['directory']
-        print "TPL PATH: %s" % tplPath
+        self.logger.debug("TPL PATH: {}".format(tplPath))
 
         extensions = [
             'jinja2.ext.do',
@@ -60,14 +62,11 @@ class Jinja():
         #    jinja_filters.register(self.env)
 
     def __call__(self, files, hana):
-        #print 'Jinja IS THERE: ', 'content/blog/2008/.DS_Store' in file_gen
-        #TODO: this somehow fixes an issue where files are iterated through that no longer exist
-
         for filename, f in files:
             if 'index.' in filename:
-                print 'jinja ', filename
+                self.logger.debug('Jinja processing {}'.format(filename))
 
-            #TODO: this is not the nicest way of doing things... jekyll need it?
+            #TODO: this is not the nicest way of doing things... jekyll need it? Maybe not nicest, but avoids having to create page specific templates in cases where page overrides sidebars, etc.
             if 'extends' in f and not 'template' in f:
                 block_name = None
 
@@ -99,7 +98,7 @@ class Jinja():
         try:
             return template.render(site=hana.metadata, page=f)
         except jinja2.exceptions.UndefinedError as e:
-            print 'Jinja Debug', filename
-            print f
+            self.logger.exception('Jinja Debug {}'.format(filename))
+            self.logger.debug(f)
             raise
 
