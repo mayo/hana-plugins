@@ -12,6 +12,7 @@ setup(name='hana-plugin-assets',
     description='Static assets plugin for Hana static site generator',
 
     install_requires=[
+        'hana',
     ],
 
     author='Mayo Jordanov',
