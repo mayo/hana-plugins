@@ -1,16 +1,29 @@
-from hana.errors import HanaPluginError
+import logging
 import os
 import re
+
+from hana.errors import HanaPluginError
 
 class PrettyUrl():
 
     def __init__(self, relative=True, index_file='index.html'):
         self.index_file = index_file
+        self.processed_files = []
+        self.logger = logging.getLogger(self.__module__)
 
     def __call__(self, files, hana):
         html_re = re.compile(r'\.(htm|html)$')
 
         for filename, f in files:
+            if filename in self.processed_files:
+                continue
+
+            _, filen = os.path.split(filename)
+
+            if filen == self.index_file:
+                self.logger.debug('Ignoring "%s". Already an index file', filename)
+                continue
+
             if not html_re.search(filename):
                 continue
 
@@ -20,7 +33,7 @@ class PrettyUrl():
             path, _ = os.path.splitext(filename)
             path = os.path.join(path, self.index_file)
 
+            self.logger.debug('Renaming "%s" to "%s"', filename, path)
+            self.processed_files.append(path)
             files.rename(filename, path)
-            #TODO: Is this supposed to be attribute or metadata?
-            f.permalink = True
 
