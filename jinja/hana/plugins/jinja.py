@@ -63,8 +63,7 @@ class Jinja():
 
     def __call__(self, files, hana):
         for filename, f in files:
-            if 'index.' in filename:
-                self.logger.debug('Jinja processing {}'.format(filename))
+            self.logger.debug('Jinja processing {}'.format(filename))
 
             #TODO: this is not the nicest way of doing things... jekyll need it? Maybe not nicest, but avoids having to create page specific templates in cases where page overrides sidebars, etc.
             if 'extends' in f and not 'template' in f:
