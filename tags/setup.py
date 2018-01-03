@@ -6,10 +6,10 @@ from os import path
 
 basedir = path.abspath(path.dirname(__file__))
 
-setup(name='hana-plugin-collections',
+setup(name='hana-plugin-tags',
     version='0.0.1',
 
-    description='Collections plugin for Hana static site generator',
+    description='Tags plugin for Hana static site generator',
 
     install_requires=[
         'hana',
@@ -33,7 +33,7 @@ setup(name='hana-plugin-collections',
 
     entry_points={
         'hana.plugins': [
-            'collections = hana.plugins.collections.Collections',
+            'tags = hana.plugins.tags.Tags',
         ]
     }
 )
