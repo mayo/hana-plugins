@@ -1,15 +1,18 @@
 import base64
 import codecs
 import hashlib
+import json
 import logging
 import mimetypes
 import os
+from StringIO import StringIO
 
 import boto3
+import botocore
+from hana.errors import HanaPluginError
 import magic
 
 #TODO: website config: put_bucket_website - ErrorDocument, IndexDocument, RoutingRules, ...
-#TODO: optionally store index file with signatures to avoid updating unchanged files
 
 class AWSS3Deploy(object):
 
@@ -35,6 +38,8 @@ class AWSS3Deploy(object):
             default_acl='public-read',
             md5sum=True,
             clean_prefix=False,
+            deploy_log_name=None,
+            update_changed_only=False
     ):
         """
         If neither access ley, secret key, or prodile is specified, use environment variables. If profile specified, uses credentials from .aws/credentials
@@ -50,6 +55,11 @@ class AWSS3Deploy(object):
         self.default_acl = default_acl
         self.md5sum = md5sum
         self.clean_prefix = clean_prefix
+        self.deploy_log_name = deploy_log_name
+        self.update_changed_only = update_changed_only
+
+        if self.update_changed_only and not self.deploy_log_name:
+            raise InvalidConfigurationError('deploy_log_name is required for update_changed_only')
 
         self.logger = logging.getLogger(self.__module__)
         self.mime = magic.Magic(mime=True)
@@ -92,6 +102,24 @@ class AWSS3Deploy(object):
                         }
                     )
 
+        deploy_log = None
+
+        if self.deploy_log_name:
+            data = StringIO()
+            self.deploy_log_key = os.path.join(self.key_prefix, self.deploy_log_name)
+
+            try:
+                s3_bucket.download_fileobj(self.deploy_log_key, data)
+                data.seek(0)
+                deploy_log = json.load(data)
+
+            except botocore.exceptions.ClientError as error:
+                if int(error.response.get('Error', {}).get('Code', 0)) != 404:
+                    raise
+
+                self.logger.info('Deploy log "%s" (key: "%s") not found', self.deploy_log_name, self.deploy_log_key)
+                deploy_log = {}
+
         for filename, f in files:
 
             if not f.is_binary:
@@ -115,10 +143,37 @@ class AWSS3Deploy(object):
 
             key = os.path.join(self.key_prefix, filename)
 
+            if deploy_log is not None:
+                # Skip if we have a local deploy log
+                if key == self.deploy_log_key:
+                    continue
+
+                md5 = self.md5(f['contents'])
+
+                if deploy_log.get(key) == md5 and self.update_changed_only:
+                    continue
+
+                deploy_log[key] = md5
+
             s3_bucket.Object(key).put(
                 ACL=s3_acl,
                 Body=f['contents'],
                 Metadata=s3_meta,
                 **key_params
             )
+
+        if deploy_log is not None:
+            deploy_log_key = os.path.join(self.key_prefix, self.deploy_log_name)
+
+            s3_bucket.Object(deploy_log_key).put(
+                Body=json.dumps(deploy_log),
+                ContentType='application/json',
+            )
+
+
+class AWSS3DeployError(HanaPluginError):
+    pass
+
+class InvalidConfigurationError(AWSS3DeployError):
+    pass
 

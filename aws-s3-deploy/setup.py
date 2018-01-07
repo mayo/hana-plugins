@@ -13,6 +13,7 @@ setup(name='hana-plugin-aws-s3-deploy',
 
     install_requires=[
         'boto3>=1.5.8',
+        'hana',
         'python-magic>=0.4.15',
     ],
 
