@@ -113,6 +113,8 @@ class AWSS3Deploy(object):
                 data.seek(0)
                 deploy_log = json.load(data)
 
+                self.logger.info('Found deploy log')
+
             except botocore.exceptions.ClientError as error:
                 if int(error.response.get('Error', {}).get('Code', 0)) != 404:
                     raise
@@ -151,9 +153,12 @@ class AWSS3Deploy(object):
                 md5 = self.md5(f['contents'])
 
                 if deploy_log.get(key) == md5 and self.update_changed_only:
+                    self.logger.info('Skipping upload of "%s", file signature as in deploy log', key)
                     continue
 
                 deploy_log[key] = md5
+
+            self.logger.info('Uploading "%s"', key)
 
             s3_bucket.Object(key).put(
                 ACL=s3_acl,
