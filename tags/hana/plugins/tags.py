@@ -1,11 +1,19 @@
 from hana.errors import HanaPluginError
 import pathspec
 
+# TODO: consider splitting prev/next to a 'navigation' plugin, rather than here. Leave this to only
+#       deal with tags.
+#
 class Tags():
-    def __init__(self, config={}, metadata_key='tags'):
+    def __init__(self, config={}, metadata_key='tags', default_tag=None):
+        # default_denotes which collection is default and applied to the actual files. Unless
+        # articles in each collection are generated dynamically or in separate files, there can
+        # only be one real collection, and the default one is it.
+
         #TODO: validate config input. can't start with _
         self.config = config
         self.metadata_key = metadata_key
+        self.default_tag = default_tag
 
         # Initialize empty tags
         self.tags = {}
@@ -29,7 +37,6 @@ class Tags():
 
         for filename, f in files:
             #TODO: this should probably be taken care of globally
-            #TODO: metafile experiment
             f['path'] = filename
 
             # Add tags metadata
@@ -51,7 +58,8 @@ class Tags():
                     self.tags[tag] = {}
 
                 # Synthetize the metadata, as we don't want it to update from other plugins
-                #TODO: why dict() ?!?!
+                # TODO: rethink this. We do need content in certain format (transformed, but not
+                #       full templates applied), but other metadata should be updated?
                 self.tags[tag][filename] = dict(f)
 
 
@@ -87,6 +95,12 @@ class Tags():
                 # set it within tag
                 coll[idx-1]['next'] = next_item
                 coll[idx]['previous'] = prev_item
+
+                if tag == self.default_tag:
+                    # Set prev/next on the default tag. This is necessary for the global blog
+                    # prev/next to work.
+                    files[coll[idx-1]['path']]['next'] = next_item
+                    files[post['path']]['previous'] = prev_item
 
             hana.metadata[self.metadata_key][tag] = coll
 
