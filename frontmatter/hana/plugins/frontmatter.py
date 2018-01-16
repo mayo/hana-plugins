@@ -10,10 +10,11 @@ def frontmatter(files, hana):
         if f.is_binary:
             continue
 
+        logger.debug('frontmatter %s', filename)
+
         # This will strip empty front matter statement
         metadata, f['contents'] = fm.parse(f['contents'])
 
-        logger.debug('frontmatter %s', filename)
 
         if metadata:
             f.update(metadata)
