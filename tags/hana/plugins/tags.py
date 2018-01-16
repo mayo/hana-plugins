@@ -5,7 +5,7 @@ import pathspec
 #       deal with tags.
 #
 class Tags():
-    def __init__(self, config={}, metadata_key='tags', default_tag=None):
+    def __init__(self, config={}, metadata_key='tags', default_tag=None, previous_key='previous', next_key='next'):
         # default_denotes which collection is default and applied to the actual files. Unless
         # articles in each collection are generated dynamically or in separate files, there can
         # only be one real collection, and the default one is it.
@@ -14,6 +14,8 @@ class Tags():
         self.config = config
         self.metadata_key = metadata_key
         self.default_tag = default_tag
+        self.previous_key = previous_key
+        self.next_key = next_key
 
         # Initialize empty tags
         self.tags = {}
@@ -89,18 +91,21 @@ class Tags():
                 if idx < 1:
                     continue
 
-                next_item = { 'path': post['path'], 'title': post['title'] }
-                prev_item = { 'path': coll[idx-1]['path'], 'title': coll[idx-1]['title'] }
+                prev_post = coll[idx-1]
+                curr_post = coll[idx]
+
+                #next_item = {'path': post['path'], 'title': post.get('title')}
+                #prev_item = {'path': prev_post['path'], 'title': prev_post.get('title')}
 
                 # set it within tag
-                coll[idx-1]['next'] = next_item
-                coll[idx]['previous'] = prev_item
+                prev_post[self.next_key] = curr_post
+                coll[idx][self.previous_key] = prev_post
 
                 if tag == self.default_tag:
                     # Set prev/next on the default tag. This is necessary for the global blog
                     # prev/next to work.
-                    files[coll[idx-1]['path']]['next'] = next_item
-                    files[post['path']]['previous'] = prev_item
+                    files[prev_post['path']][self.next_key] = curr_post
+                    files[post['path']][self.previous_key] = prev_post
 
             hana.metadata[self.metadata_key][tag] = coll
 
