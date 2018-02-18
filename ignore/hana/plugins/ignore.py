@@ -7,11 +7,11 @@ def ignore(patterns):
     spec = pathspec.PathSpec.from_lines('gitwildmatch', patterns)
 
     def ignore_plugin(files, hana):
-        matches = spec.match_files(files.filenames())
+        matches = spec.match_files(hana.files.filenames())
 
         for f in matches:
             logger.debug('Ignoring {}'.format(f))
-            files.remove(f)
+            hana.files.remove(f)
 
     return ignore_plugin
 

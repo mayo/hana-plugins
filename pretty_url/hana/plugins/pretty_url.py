@@ -27,6 +27,7 @@ class PrettyUrl():
             if not html_re.search(filename):
                 continue
 
+            #TODO: what's the meaning of this?
             if not f.get('permalink', True):
                 continue
 
@@ -35,5 +36,5 @@ class PrettyUrl():
 
             self.logger.debug('Renaming "%s" to "%s"', filename, path)
             self.processed_files.append(path)
-            files.rename(filename, path)
+            hana.files.rename(filename, path)
 

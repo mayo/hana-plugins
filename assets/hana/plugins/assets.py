@@ -28,10 +28,10 @@ def assets(assets, base_dir='', create_dirs=True, sideload=False):
                         src_path = os.path.join(path, sfile)
                         dst_path = os.path.join(dst, sub_path, sfile)
 
-                        files.add(dst_path, FSFile(src_path))
+                        hana.files.add(dst_path, FSFile(src_path))
 
             else:
-                files.add(dst, FSFile(src))
+                hana.files.add(dst, FSFile(src))
 
     def asset_sideload(files, hana):
         for src, dst in assets.items():

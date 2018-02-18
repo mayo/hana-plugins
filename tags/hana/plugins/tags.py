@@ -104,9 +104,8 @@ class Tags():
                 if tag == self.default_tag:
                     # Set prev/next on the default tag. This is necessary for the global blog
                     # prev/next to work.
-                    files[prev_post['path']][self.next_key] = curr_post
-                    files[post['path']][self.previous_key] = prev_post
+                    hana.files[prev_post['path']][self.next_key] = curr_post
+                    hana.files[post['path']][self.previous_key] = prev_post
 
             hana.metadata[self.metadata_key][tag] = coll
-
 

@@ -50,7 +50,7 @@ class Markdown(object):
             file_basename, _ = os.path.splitext(filename)
             new_name = "{:s}{:s}".format(file_basename, self.output_extension)
 
-            files.rename(filename, new_name)
+            hana.files.rename(filename, new_name)
 
             f['contents'] = self.md.convert(f['contents'])
 
