@@ -153,7 +153,7 @@ class AWSS3Deploy(object):
                 md5 = self.md5(f['contents'])
 
                 if deploy_log.get(key) == md5 and self.update_changed_only:
-                    self.logger.info('Skipping upload of "%s", file signature as in deploy log', key)
+                    self.logger.debug('Skipping upload of "%s", file signature matches the one in deploy log', key)
                     continue
 
                 deploy_log[key] = md5
