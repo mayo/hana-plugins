@@ -14,7 +14,8 @@ class PrettyUrl():
     def __call__(self, files, hana):
         html_re = re.compile(r'\.(htm|html)$')
 
-        for filename, f in files:
+        #TODO: fix this in Hana
+        for filename, f in dict(files).iteritems():
             if filename in self.processed_files:
                 continue
 

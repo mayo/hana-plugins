@@ -37,12 +37,14 @@ class Markdown(object):
                 output_format='html5'
         )
 
+        self.md_re = re.compile(r'\.(md|markdown)$')
+
 
     def __call__(self, files, hana):
-        md_re = re.compile(r'\.(md|markdown)$')
 
-        for filename, f in files:
-            if not md_re.search(filename):
+        #TODO: fix this in Hana
+        for filename, f in dict(files).iteritems():
+            if not self.md_re.search(filename):
                 continue
 
             self.logger.debug('markdown {}'.format(filename))
@@ -50,6 +52,7 @@ class Markdown(object):
             file_basename, _ = os.path.splitext(filename)
             new_name = "{:s}{:s}".format(file_basename, self.output_extension)
 
+            self.logger.debug('renaming %s to %s', filename, new_name)
             hana.files.rename(filename, new_name)
 
             f['contents'] = self.md.convert(f['contents'])
