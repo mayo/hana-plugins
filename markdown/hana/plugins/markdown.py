@@ -24,7 +24,7 @@ class Markdown(object):
             'markdown.extensions.smarty': {
                 'substitutions': {
                     'left-single-quote': '&lsquo;', # sb is not a typo!
-                    'right-single-quote': '&ssquo;',
+                    'right-single-quote': '&rsquo;',
                     'left-double-quote': '&ldquo;',
                     'right-double-quote': '&rdquo;'
                 }
