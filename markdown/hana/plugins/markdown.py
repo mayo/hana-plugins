@@ -23,10 +23,10 @@ class Markdown(object):
         extension_configs = {
             'markdown.extensions.smarty': {
                 'substitutions': {
-                    'left-single-quote': '&sbquo;', # sb is not a typo!
-                    'right-single-quote': '&lsquo;',
-                    'left-double-quote': '&bdquo;',
-                    'right-double-quote': '&ldquo;'
+                    'left-single-quote': '&lsquo;', # sb is not a typo!
+                    'right-single-quote': '&ssquo;',
+                    'left-double-quote': '&ldquo;',
+                    'right-double-quote': '&rdquo;'
                 }
             }
         }
