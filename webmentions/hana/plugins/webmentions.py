@@ -32,7 +32,7 @@ class FindWebmentions(object):
         html_re = re.compile(r'\.(html|htm)$')
 
         # Local cache to avoid multiple lookups
-        url_endpoints = {}
+        url_endpoint_cache = {}
 
         for filename, hfile in files:
             if not html_re.search(filename):
@@ -49,22 +49,29 @@ class FindWebmentions(object):
 
             mentions = ronkyuu.findMentions(None, content=hfile['contents'], test_urls=False, exclude_domains=self.exclude_domains)
 
+            if not self.webmention_meta_key in hfile:
+                hfile[self.webmention_meta_key] = dict()
+
             for href in mentions['refs']:
                 self.logger.debug('Found URL: %s', href)
 
-                wm_url = url_endpoints.get(href, False)
+                wm_url = url_endpoint_cache.get(href)
 
-                if wm_url == False:
+                if not wm_url:
                     self.logger.debug('Looking up Webmention endpoint for %s', href)
                     wm_status, wm_url = ronkyuu.discoverEndpoint(href, test_urls=False)
 
                     if wm_status != requests.codes.ok:
                         continue
 
-                    url_endpoints[href] = wm_url
+                    if not wm_url:
+                        continue
 
-            # Keep only URLs with endpoints
-            hfile[self.webmention_meta_key] = {href: ep for href, ep in url_endpoints.iteritems() if ep}
+                    url_endpoint_cache[href] = wm_url
+
+                # Keep only URLs with endpoints
+                hfile[self.webmention_meta_key][href] = wm_url
+                self.logger.debug('Found webmention endpoint "%s" for "%s"', wm_url, href)
 
             if self.cache_file:
                 self.cache[filename] = hfile.sha1sum()
@@ -99,11 +106,13 @@ class SendWebmentions(object):
                 if not wm_url:
                     continue
 
+                self.logger.debug('Sending webmention for "%s" to endpoint "%s" for "%s"', filename, wm_url, href)
+
                 status_code = ronkyuu.sendWebmention(source_url, href, wm_url)
                 status_code = requests.codes.ok
 
                 if status_code == requests.codes.ok:
-                    self.logger.debug('Webmention sent successfully')
+                    self.logger.info('Webmention sent successfully for %s', href)
                 else:
-                    self.logger.debug('Webmention send returned a status code of %s', status_code)
+                    self.logger.info('Webmention send for "%s" returned a status code of %s', href, status_code)
 
