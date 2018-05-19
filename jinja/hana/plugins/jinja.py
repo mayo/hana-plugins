@@ -24,6 +24,17 @@ def jinja_json(eval_ctx, value, indent=None):
 
     return Markup(rv)
 
+
+class CustomJSONEncoder(json.JSONEncoder):
+
+  def default(self, o):
+
+    if isinstance(o, set):
+        return list(o)
+
+    return json.JSONEncoder.default(self, o)
+
+
 class Jinja():
     def __init__(self, config={}):
         self.logger = logging.getLogger(self.__module__)
@@ -52,6 +63,11 @@ class Jinja():
 
         #TODO: adding custom filters
         self.env.filters['json'] = jinja_json
+
+        # customize json dumper
+        self.env.policies['json.dumps_kwargs'].update({
+            'cls': CustomJSONEncoder,
+        })
 
         #try:
         #    from typogrify.templatetags import jinja_filters
