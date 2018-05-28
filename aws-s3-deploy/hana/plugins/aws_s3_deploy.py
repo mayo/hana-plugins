@@ -67,8 +67,8 @@ class AWSS3Deploy(object):
     def get_content_type(self, data):
         return self.mime.from_buffer(data[:1024])
 
-    def md5(self, data):
-        return base64.b64encode(hashlib.md5(data).digest())
+    def md5(self, hfile):
+        return base64.b64encode(hfile.hashsum(hashlib.md5).digest())
 
     def __call__(self, files, hana):
         s3_session = None
@@ -124,9 +124,6 @@ class AWSS3Deploy(object):
 
         for filename, f in files:
 
-            if not f.is_binary:
-                f['contents'] = codecs.encode(f['contents'], 'utf-8')
-
             s3_meta = f.get(self.file_meta_key, {})
             s3_acl = f.get(self.file_acl_key, self.default_acl)
 
@@ -139,7 +136,7 @@ class AWSS3Deploy(object):
                 s3_meta['Content-Type'] = content_type
 
             if self.md5sum and 'Content-MD5' not in s3_meta:
-                s3_meta['Content-MD5'] = self.md5(f['contents'])
+                s3_meta['Content-MD5'] = self.md5(f)
 
             key_params = {c.replace('-', ''): s3_meta.pop(c) for c in AWSS3Deploy.AMAZON_KEY_META if c in s3_meta}
 
@@ -150,7 +147,7 @@ class AWSS3Deploy(object):
                 if key == self.deploy_log_key:
                     continue
 
-                md5 = self.md5(f['contents'])
+                md5 = self.md5(f)
 
                 if deploy_log.get(key) == md5 and self.update_changed_only:
                     self.logger.debug('Skipping upload of "%s", file signature matches the one in deploy log', key)
