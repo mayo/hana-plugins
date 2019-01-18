@@ -12,7 +12,7 @@ setup(name='hana-plugin-sass',
     description='SASS plugin for Hana static site generator',
 
     install_requires=[
-        'sass>=2.3.0',
+        'libsass>=0.17.0',
     ],
 
     author='Mayo Jordanov',

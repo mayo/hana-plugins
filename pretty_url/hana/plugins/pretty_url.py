@@ -15,7 +15,7 @@ class PrettyUrl():
         html_re = re.compile(r'\.(htm|html)$')
 
         #TODO: fix this in Hana
-        for filename, f in dict(files).iteritems():
+        for filename, f in dict(files).items():
             if filename in self.processed_files:
                 continue
 

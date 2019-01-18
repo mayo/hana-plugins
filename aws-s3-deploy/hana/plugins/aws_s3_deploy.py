@@ -5,7 +5,7 @@ import json
 import logging
 import mimetypes
 import os
-from StringIO import StringIO
+from io import StringIO
 
 import boto3
 import botocore

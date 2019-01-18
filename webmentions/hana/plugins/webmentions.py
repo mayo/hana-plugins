@@ -3,7 +3,7 @@ import json
 import logging
 import os
 import re
-import urlparse
+from urllib import parse as  urlparse
 import urllib3
 
 import requests
@@ -102,7 +102,7 @@ class SendWebmentions(object):
 
             source_url = urlparse.urljoin(self.base_uri, filename)
 
-            for href, wm_url in hfile[self.webmention_meta_key].iteritems():
+            for href, wm_url in hfile[self.webmention_meta_key].items():
                 if not wm_url:
                     continue
 

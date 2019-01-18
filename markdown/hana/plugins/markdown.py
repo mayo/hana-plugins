@@ -43,7 +43,7 @@ class Markdown(object):
     def __call__(self, files, hana):
 
         #TODO: fix this in Hana
-        for filename, f in dict(files).iteritems():
+        for filename, f in dict(files).items():
             if not self.md_re.search(filename):
                 continue
 

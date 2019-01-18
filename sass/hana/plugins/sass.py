@@ -4,7 +4,6 @@ import logging
 import os
 import re
 
-#from scss import Compiler
 import sass as scss
 
 class Sass(object):
@@ -20,7 +19,7 @@ class Sass(object):
     def __call__(self, files, hana):
 
         #TODO: fix this in Hana
-        for filename, f in dict(files).iteritems():
+        for filename, f in dict(files).items():
             if not self.file_re.search(filename):
                 continue
 
@@ -33,10 +32,10 @@ class Sass(object):
                 hana.files.remove(filename)
                 continue
 
-            f['contents'] = scss.compile_string(
-                f['contents'].encode('utf-8'),
-                output_style=scss.SASS_STYLE_EXPANDED
-            ).decode('utf-8')
+            f['contents'] = scss.compile(
+                string=f['contents'].encode('utf-8'),
+                output_style='expanded',
+            )
 
             file_basename, _ = os.path.splitext(filename)
             new_name = "{:s}{:s}".format(file_basename, self.output_extension)

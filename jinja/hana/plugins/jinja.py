@@ -98,7 +98,9 @@ class Jinja():
 
             if 'template' in f:
                 c = self.render(filename, f, hana)
-                f['contents'] = unicode(c)
+                #TODO: this is right? py3
+                f['contents'] = c
+                #f['contents'] = unicode(c)
 
     def render(self, filename, f, hana):
         tpl = f.get('template')

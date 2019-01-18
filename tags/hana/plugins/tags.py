@@ -22,11 +22,11 @@ class Tags():
         self.patterns = {}
 
         # Generate patterns
-        for tag, tag_def in self.config.iteritems():
+        for tag, tag_def in self.config.items():
             if 'pattern' in tag_def:
                 patterns = tag_def['pattern']
 
-                if isinstance(patterns, basestring):
+                if isinstance(patterns, str):
                     patterns = [patterns]
 
                 self.patterns[tag] = pathspec.PathSpec.from_lines('gitwildmatch', patterns)
@@ -46,7 +46,7 @@ class Tags():
                 f[self.metadata_key] = []
 
             # Add pattern tags
-            for tag, tag_pat in self.patterns.iteritems():
+            for tag, tag_pat in self.patterns.items():
                 if tag_pat.match_file(filename):
                     f[self.metadata_key].append(tag)
 
@@ -68,8 +68,8 @@ class Tags():
         # Initialize main tag list in hana
         hana.metadata[self.metadata_key] = {}
 
-        for tag, tag_def in self.tags.iteritems():
-            tag_def = tag_def.itervalues()
+        for tag, tag_def in self.tags.items():
+            tag_def = tag_def.values()
 
             # Sort
             if tag in self.config and self.config[tag].get('sort_by'):

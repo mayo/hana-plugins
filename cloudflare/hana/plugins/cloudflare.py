@@ -3,7 +3,7 @@ import json
 import logging
 import os
 import time
-import urlparse
+from urllib import parse as urlparse
 import CloudFlare
 from hana.errors import HanaPluginError
 

@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import logging
 import os
 import urllib
-import httplib
+from http import client as httplib
 
 from hana.errors import HanaPluginError
 
