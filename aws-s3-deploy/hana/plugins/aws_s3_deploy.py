@@ -5,7 +5,7 @@ import json
 import logging
 import mimetypes
 import os
-from io import StringIO
+from io import BytesIO
 
 import boto3
 import botocore
@@ -68,7 +68,7 @@ class AWSS3Deploy(object):
         return self.mime.from_buffer(data[:1024])
 
     def md5(self, hfile):
-        return base64.b64encode(hfile.hashsum(hashlib.md5).digest())
+        return base64.b64encode(hfile.hashsum(hashlib.md5).digest()).decode('utf-8')
 
     def __call__(self, files, hana):
         s3_session = None
@@ -105,7 +105,7 @@ class AWSS3Deploy(object):
         deploy_log = None
 
         if self.deploy_log_name:
-            data = StringIO()
+            data = BytesIO()
             self.deploy_log_key = os.path.join(self.key_prefix, self.deploy_log_name)
 
             try:
@@ -123,6 +123,7 @@ class AWSS3Deploy(object):
                 deploy_log = {}
 
         for filename, f in files:
+            self.logger.debug('Processing "%s"', filename)
 
             s3_meta = f.get(self.file_meta_key, {})
             s3_acl = f.get(self.file_acl_key, self.default_acl)
