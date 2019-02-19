@@ -10,7 +10,7 @@ def ping(feed_url):
     logger = logging.getLogger(__name__)
 
     def plugin(hana, files):
-        data = urllib.urlencode({'url': feed_url})
+        data = urllib.parse.urlencode({'url': feed_url})
 
         conn = httplib.HTTPSConnection('micro.blog')
         conn.request('POST', '/ping', data)
