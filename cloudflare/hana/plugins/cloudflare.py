@@ -48,7 +48,7 @@ class PurgeCache(object):
 
         urls = [urlparse.urljoin(self.base_url, fn) for fn in files]
 
-        for idx in xrange(0, len(urls), CF_PURGE_LIMIT):
+        for idx in range(0, len(urls), CF_PURGE_LIMIT):
             url_subset = urls[idx:idx+CF_PURGE_LIMIT]
             self.logger.info('Purging %d/%d files', len(url_subset), len(urls))
 
