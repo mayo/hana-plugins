@@ -29,11 +29,11 @@ setup(name='hana-plugin-titles',
 
     keywords='hana titles',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'titles = hana.plugins.titles:titles',
+        'hana_plugins': [
+            'titles = hana_plugins.titles:titles',
         ]
     }
 )

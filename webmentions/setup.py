@@ -28,12 +28,12 @@ setup(name='hana-plugin-webmentions',
 
     keywords='hana front matter metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'find_webmentions = hana.plugins.webmentions.FindWebmentions',
-            'send_webmentions = hana.plugins.webmentions.SendWebmentions',
+        'hana_plugins': [
+            'find_webmentions = hana_plugins.webmentions.FindWebmentions',
+            'send_webmentions = hana_plugins.webmentions.SendWebmentions',
         ]
     }
 )

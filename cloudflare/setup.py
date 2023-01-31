@@ -28,11 +28,11 @@ setup(name='hana-plugin-cloudflare',
 
     keywords='hana cloudflare cdn',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'cloudflare_purge_cache = hana.plugins.cloudflare:purge_cache',
+        'hana_plugins': [
+            'cloudflare_purge_cache = hana_plugins.cloudflare:purge_cache',
         ]
     }
 )

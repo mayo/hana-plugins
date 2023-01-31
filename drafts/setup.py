@@ -27,11 +27,11 @@ setup(name='hana-plugin-drafts',
 
     keywords='hana drafts',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'drafts = hana.plugins.drafts:drafts',
+        'hana_plugins': [
+            'drafts = hana_plugins.drafts:drafts',
         ]
     }
 )

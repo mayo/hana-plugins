@@ -29,11 +29,11 @@ setup(name='hana-plugin-excerpts',
 
     keywords='hana front matter metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'exceprts = hana.plugins.exceprts:exceprts',
+        'hana_plugins': [
+            'exceprts = hana_plugins.exceprts:exceprts',
         ]
     }
 )

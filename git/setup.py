@@ -6,13 +6,13 @@ from os import path
 
 basedir = path.abspath(path.dirname(__file__))
 
-setup(name='hana-plugin-micro_blog',
+setup(name='hana-plugin-git',
     version='0.0.1',
 
-    description='Micro.blog helpers',
+    description='Git plugin for Hana static site generator',
 
     install_requires=[
-        'hana',
+        'gitpython>=2.1.8',
     ],
 
     author='Mayo Jordanov',
@@ -26,13 +26,13 @@ setup(name='hana-plugin-micro_blog',
         'Programming Language :: Python',
     ],
 
-    keywords='hana micro.blog',
+    keywords='hana git',
 
     packages=['hana_plugins'],
 
     entry_points={
         'hana_plugins': [
-            'micro_blog_ping = hana_plugins.micro_blog:ping',
+            'git = hana_plugins.git:git',
         ]
     }
 )

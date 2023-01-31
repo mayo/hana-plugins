@@ -6,13 +6,13 @@ from os import path
 
 basedir = path.abspath(path.dirname(__file__))
 
-setup(name='hana-plugin-micro_blog',
+setup(name='hana-plugin-beautify',
     version='0.0.1',
 
-    description='Micro.blog helpers',
+    description='Beautify HTML plugin for Hana static site generator',
 
     install_requires=[
-        'hana',
+        'beautifulsoup4>=4.6.0',
     ],
 
     author='Mayo Jordanov',
@@ -26,13 +26,13 @@ setup(name='hana-plugin-micro_blog',
         'Programming Language :: Python',
     ],
 
-    keywords='hana micro.blog',
+    keywords='hana html beautify',
 
     packages=['hana_plugins'],
 
     entry_points={
         'hana_plugins': [
-            'micro_blog_ping = hana_plugins.micro_blog:ping',
+            'beautify = hana_plugins.beautify:beautify',
         ]
     }
 )

@@ -28,11 +28,11 @@ setup(name='hana-plugin-pretty-url',
 
     keywords='hana',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'pretty_url = hana.plugins.pretty_url.PrettyUrl',
+        'hana_plugins': [
+            'pretty_url = hana_plugins.pretty_url.PrettyUrl',
         ]
     }
 )

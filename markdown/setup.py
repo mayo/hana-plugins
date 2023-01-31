@@ -30,11 +30,11 @@ setup(name='hana-plugin-markdown',
 
     keywords='hana markdown',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'markdown = hana.plugins.markdown.Markdown',
+        'hana_plugins': [
+            'markdown = hana_plugins.markdown.Markdown',
         ]
     }
 )

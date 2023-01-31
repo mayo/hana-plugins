@@ -6,13 +6,13 @@ from os import path
 
 basedir = path.abspath(path.dirname(__file__))
 
-setup(name='hana-plugin-micro_blog',
+setup(name='hana-plugin-frontmatter',
     version='0.0.1',
 
-    description='Micro.blog helpers',
+    description='Front matter plugin for Hana static site generator',
 
     install_requires=[
-        'hana',
+        'python-frontmatter>=0.4.2',
     ],
 
     author='Mayo Jordanov',
@@ -26,13 +26,13 @@ setup(name='hana-plugin-micro_blog',
         'Programming Language :: Python',
     ],
 
-    keywords='hana micro.blog',
+    keywords='hana front matter metadata',
 
     packages=['hana_plugins'],
 
     entry_points={
         'hana_plugins': [
-            'micro_blog_ping = hana_plugins.micro_blog:ping',
+            'frontmatter = hana_plugins.frontmatter:frontmatter',
         ]
     }
 )

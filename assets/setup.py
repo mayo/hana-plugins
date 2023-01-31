@@ -28,11 +28,11 @@ setup(name='hana-plugin-assets',
 
     keywords='hana assets',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'assets = hana.plugins.assets:assets',
+        'hana_plugins': [
+            'assets = hana_plugins.assets:assets',
         ]
     }
 )

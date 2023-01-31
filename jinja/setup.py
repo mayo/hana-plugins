@@ -29,11 +29,11 @@ setup(name='hana-plugin-jinja',
 
     keywords='hana static site template',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'jinja_templates = hana.plugins.jinja.JinjaTemplates',
+        'hana_plugins': [
+            'jinja_templates = hana_plugins.jinja.JinjaTemplates',
         ]
     }
 )

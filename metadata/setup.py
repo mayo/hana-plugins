@@ -27,11 +27,11 @@ setup(name='hana-plugin-metadata',
 
     keywords='hana metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'metadata = hana.plugins.metadata:metadata',
+        'hana_plugins': [
+            'metadata = hana_plugins.metadata:metadata',
         ]
     }
 )

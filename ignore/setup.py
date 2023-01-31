@@ -29,11 +29,11 @@ setup(name='hana-plugin-ignore',
 
     keywords='hana',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'ignore = hana.plugins.ignore:ignore',
+        'hana_plugins': [
+            'ignore = hana_plugins.ignore:ignore',
         ]
     }
 )

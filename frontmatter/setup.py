@@ -28,11 +28,11 @@ setup(name='hana-plugin-frontmatter',
 
     keywords='hana static site front matter metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'frontmatter = hana.plugins.frontmatter:frontmatter',
+        'hana_plugins': [
+            'frontmatter = hana_plugins.frontmatter:frontmatter',
         ]
     }
 )

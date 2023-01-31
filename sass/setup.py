@@ -28,11 +28,11 @@ setup(name='hana-plugin-sass',
 
     keywords='hana sass metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'sass = hana.plugins.sass.Sass',
+        'hana_plugins': [
+            'sass = hana_plugins.sass.Sass',
         ]
     }
 )

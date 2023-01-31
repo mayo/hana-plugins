@@ -29,11 +29,11 @@ setup(name='hana-plugin-tags',
 
     keywords='hana front matter metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'tags = hana.plugins.tags.Tags',
+        'hana_plugins': [
+            'tags = hana_plugins.tags.Tags',
         ]
     }
 )

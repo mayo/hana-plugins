@@ -30,14 +30,14 @@ setup(name='hana-plugin-aws-s3-deploy',
 
     keywords='hana front matter metadata',
 
-    packages=['hana.plugins'],
+    packages=['hana_plugins'],
 
     entry_points={
-        'hana.plugins': [
-            'aws_s3_deploy = hana.plugins.s3_deploy:AWSS3Deploy',
+        'hana_plugins': [
+            'aws_s3_deploy = hana_plugins.s3_deploy:AWSS3Deploy',
         ],
         'hana.commands': [
-            'aws_s3_deploy = hana.plugins.aws_s3_deploy:AWSS3Commands',
+            'aws_s3_deploy = hana_plugins.aws_s3_deploy:AWSS3Commands',
         ]
     }
 )
