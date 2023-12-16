@@ -24,6 +24,10 @@ def assets(assets, base_dir='', create_dirs=True, sideload=False):
                 for path, _, sfiles in os.walk(src):
                     sub_path = path[len(src):]
 
+                    # Strip leading /, if present, as path.join() will treat it as root
+                    if sub_path.startswith('/'):
+                        sub_path = sub_path[1:]
+
                     for sfile in sfiles:
                         src_path = os.path.join(path, sfile)
                         dst_path = os.path.join(dst, sub_path, sfile)
