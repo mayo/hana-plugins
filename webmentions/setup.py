@@ -13,6 +13,7 @@ setup(name='hana-plugin-webmentions',
 
     install_requires=[
         'ronkyuu>=0.6.0',
+        'html5lib==1.1',
     ],
 
     author='Mayo Jordanov',
